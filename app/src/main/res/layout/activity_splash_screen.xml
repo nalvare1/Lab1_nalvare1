@@ -19,7 +19,7 @@
         android:inputType="textPersonName"
         android:text="Notre Dame IN"
         android:ems="6"
-        android:id="@+id/notreDameText"
+        android:id="@+id/notreDameText1"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
@@ -47,7 +47,7 @@
         android:textSize="3mm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/notreDameText"
+        android:layout_below="@+id/notreDameText1"
         android:layout_centerHorizontal="true"
         android:id="@+id/basketballText" />
 
