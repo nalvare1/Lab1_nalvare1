@@ -2,54 +2,73 @@ package com.cs60333.nalvare1.lab1_nalvare1;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {//or extends Activity??
+    ArrayList<Team> teams;
+    ListView scheduleListView;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //String[] teams = {"Ohio State", "Florida State", "Wake Forest", "Boston College", "North Carolina State", "Georgia Tech", "North Virginia", "Chicago State"};
-        String[] wake = {"wf", "Wake Forest", "Feb 2", "Thursday, February 2, 6:00 PM", "Demon Deacon", "(15-9)", "60-92"};
-        String[] ohio = {"os", "Ohio State", "Feb 4", "Saturday, February 4, 6:00 PM", "Brutus Buckeye", "(22-7)", "74-82"};
-        String[] florida = {"fsu", "Florida State", "Feb 11", "Saturday, February 11, 6:00 PM", "Seminoles", "(21-5)", "72-84"};
-        String[] boston = {"bc", "Boston College", "Feb 14", "Tuesday, February 14, 6:00 PM", "Golden Eagles", "(24-6)", "80-83"};
-        String[] northC = {"ncs", "North Carolina State", "Feb 18", "Saturday, February 18, 6:00 PM", "Wolfpack", "(16-10)", "54-97"};
-        String[] georgia = {"gt", "Georgia Tech", "Feb 26", "Sunday, February 26, 6:00 PM", "Ramblin' Wreck", "(24-8)", "78-82"};
-        String[] northV = {"nv", "North Virginia", "March 1", "Wednesday, March 1, 6:00 PM", "Vipers", "(14-12)", "24-84"};
-        String[] chicago = {"cs", "Chicago State", "March 4", "Saturday, March 4, 6:00 PM", "Wildcats", "(16-14)", "40-76"};
+        MyCsvFileReader reader = new MyCsvFileReader(getApplicationContext());
+        ArrayList<String[]> readerArrayList = reader.readCsvFile(R.raw.schedule); //returns an array list of strings??
+        Team wake = new Team(readerArrayList.get(0));
+        Team ohio = new Team(readerArrayList.get(1));
+        Team florida = new Team(readerArrayList.get(2));
+        Team boston = new Team(readerArrayList.get(3));
+        Team northC = new Team(readerArrayList.get(4));
+        Team georgia = new Team(readerArrayList.get(5));
+        Team northV = new Team(readerArrayList.get(6));
+        Team chicago = new Team(readerArrayList.get(7));
 
         //create a list of arrays
-        final ArrayList<String[]> arr = new ArrayList<String[]>();
-        arr.add(wake);
-        arr.add(ohio);
-        arr.add(florida);
-        arr.add(boston);
-        arr.add(northC);
-        arr.add(georgia);
-        arr.add(northV);
-        arr.add(chicago);
+        teams = new ArrayList<>();
+        //final ArrayList<String[]> arr = new ArrayList<String[]>();
+        teams.add(wake);
+        teams.add(ohio);
+        teams.add(florida);
+        teams.add(boston);
+        teams.add(northC);
+        teams.add(georgia);
+        teams.add(northV);
+        teams.add(chicago);
+
+        //Lab 6:
+        // getSupportActionBar().hide(); //do NOT use this!!(causes errors!)
+        Toolbar my_tool_bar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(my_tool_bar);
+        my_tool_bar.setTitle("ND Athletics");
 
 
-        ScheduleAdapter scheduleAdapter = new ScheduleAdapter(getApplicationContext(), arr);
-        ListView scheduleListView = (ListView) findViewById(R.id.scheduleListView);
-
+        ScheduleAdapter scheduleAdapter = new ScheduleAdapter(getApplicationContext(), teams);
+        scheduleListView = (ListView) findViewById(R.id.scheduleListView);
         scheduleListView.setAdapter(scheduleAdapter);
-
         //AdapterView.OnItemClickListener clickListener = (parent, view, position, id) -> {
+
         OnItemClickListener clickListener = new OnItemClickListener() {
-          //  @Override
+            //  @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent myintent = new Intent(MainActivity.this, Detail.class);
-                myintent.putExtra("team", arr.get(position));
+                myintent.putExtra("team", teams.get(position));
+                System.out.println("" + teams.get(position).getTeamName());
                 startActivity(myintent);
+
             }
 
         };
@@ -57,4 +76,81 @@ public class MainActivity extends AppCompatActivity {
         scheduleListView.setOnItemClickListener(clickListener);
 
     }
+
+    //Lab 6: menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    //Lab 6: share's gameSchedule() function
+    public String gameSchedule() {
+        StringBuilder teamStringBuilder = new StringBuilder(20);
+        for(int i = 0; i < teams.size(); i++) {
+          //  teamStringBuilder.append(teams.get(i).getTeamName());
+            teamStringBuilder.append(teams.get(i).getTeamName());
+            teamStringBuilder.append(teams.get(i).getDateAndTime());
+            teamStringBuilder.append(" ");
+        }
+
+        String teamString = teamStringBuilder.toString();
+        return teamString;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int res_id = item.getItemId();
+
+        if (res_id == R.id.share) {
+// code for sharing the schedule
+
+            Intent shareIntent = new Intent();
+            shareIntent.setAction(android.content.Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "BasketBall Matches");
+            shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, gameSchedule());
+            startActivity(android.content.Intent.createChooser(shareIntent, "Share via"));
+
+        } else if (res_id == R.id.sync) {
+        // Snackbar with Try Again action
+
+            final CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorlayout);
+            Snackbar snackbar = Snackbar.make(coordinatorLayout, "Sync is not yet implemented", Snackbar.LENGTH_LONG);
+            snackbar.setAction("Try Again", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Snackbar.make(coordinatorLayout, "Wait for the next few labs. Thank you for your patience", Snackbar.LENGTH_LONG).show();
+                }
+
+            });
+            snackbar.show();
+        } else if (res_id == R.id.settings) {
+        // Floating Contextual Menu with options
+            registerForContextMenu(scheduleListView);
+            openContextMenu(scheduleListView);
+            unregisterForContextMenu(scheduleListView);
+        }
+        return true;
+    }
+
+    //floating_contextual_menu: Lab 6
+    @Override
+    public void onCreateContextMenu (ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.floating_contextual_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        int item_id = item.getItemId();
+        if (item_id == R.id.women) {
+        // to be implemented later
+        }
+        //and so on ...
+        return false;
+    }
+
 }
