@@ -1,9 +1,11 @@
-<resources>
+<?xml version="1.0" encoding="utf-8"?>
+<resources>  
+    <style name="MyMaterialTheme" parent="SuperMaterialTheme">  
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+
+    </style>  
+    <style name="ToolbarStyle2" parent="MyToolbarTheme">
+        <item name = "android:elevation">4dp </item>
     </style>
+     
 </resources>

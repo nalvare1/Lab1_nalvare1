@@ -1,0 +1,22 @@
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/share"
+        android:icon="@drawable/ic_share"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:title="Share"/>
+
+    <item android:id="@+id/sync"
+        android:icon="@drawable/ic_sync"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom"
+        android:title="Sync"/>
+
+    <item android:id="@+id/settings"
+        android:icon="@drawable/ic_settings"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="Settings"/>
+</menu>

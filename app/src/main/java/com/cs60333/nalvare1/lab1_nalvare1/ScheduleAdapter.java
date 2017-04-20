@@ -39,6 +39,10 @@ public class ScheduleAdapter extends ArrayAdapter<Team> { //ArrayAdapter<String[
         TextView gameDate = (TextView) scheduleView.findViewById(R.id.gameText);
         gameDate.setText(matchItem.getDateAbbrev());
 
+       // ImageView photo_from_camera = (ImageView) scheduleView.findViewById(R.id.photo_taken);
+       // int resID2 = getContext().getResources().getIdentifier("natalie_football", "drawable", getContext().getPackageName());
+       // photo_from_camera.setImageResource(resID2);
+
         return scheduleView;
     }
 

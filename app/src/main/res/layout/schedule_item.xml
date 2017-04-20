@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        app:srcCompat="@drawable/cs"
+        app:srcCompat="@drawable/nv"
         android:id="@+id/teamLogo"
         android:layout_height="75dp"
         android:layout_width="75dp" />

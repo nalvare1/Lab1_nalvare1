@@ -14,15 +14,6 @@
         android:layout_alignEnd="@+id/opposingTeamImage"
         android:layout_width="100dp" />
 
-    <Button
-        android:text="Camera"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="38dp"
-        android:id="@+id/cameraButton"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
     <TextView
         android:text="Notre Dame"
         android:id="@+id/notreDameText1"
@@ -35,15 +26,16 @@
     <ImageView
         app:srcCompat="@drawable/fightingirishicon"
         android:id="@+id/notreDameImage"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="@dimen/square100"
+        android:layout_height="@dimen/square100"
         android:layout_alignTop="@+id/opposingTeamImage"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="16dp" />
 
     <TextView
         android:text="Seminoles"
-        android:textSize="25dp"
+        android:textSize="@dimen/mascotFont"
+
 
         android:layout_height="wrap_content"
         android:id="@+id/opposingTeamText2"
@@ -81,22 +73,12 @@
         android:layout_marginStart="17dp"
         android:id="@+id/notreDameText3" />
 
-    <TextView
-        android:text="TextView"
-        android:textSize="25dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/scoreText1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="23dp"
-        android:id="@+id/scoreText2" />
-
     <ImageView
-        app:srcCompat="@drawable/fsu"
+        app:srcCompat="@drawable/nv"
         android:id="@+id/opposingTeamImage"
         android:layout_marginTop="11dp"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="@dimen/square100"
+        android:layout_height="@dimen/square100"
         android:layout_marginStart="11dp"
         android:layout_below="@+id/locationText"
         android:layout_alignParentStart="true" />
@@ -105,7 +87,7 @@
         android:text="Saturday, February 11, 6:00 PM"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/dateText"
+        android:id="@+id/ndText"
         android:layout_weight="0.19"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
@@ -116,18 +98,38 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/locationText"
-        android:layout_alignBaseline="@+id/dateText"
-        android:layout_alignBottom="@+id/dateText"
+        android:layout_alignBaseline="@+id/ndText"
+        android:layout_alignBottom="@+id/ndText"
         android:layout_alignParentStart="true" />
 
     <TextView
         android:text="Final Score"
-        android:textSize="30dp"
+        android:textSize="@dimen/finalFont"
         android:textAlignment="center"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:id="@+id/scoreText1"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="38dp"
         android:layout_below="@+id/notreDameText3"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="TextView"
+        android:textSize="@dimen/mascotFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:id="@+id/scoreText2"
+        android:layout_below="@+id/scoreText1"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="image_gallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/gallery_button"
+        android:layout_marginTop="67dp"
+        android:layout_below="@+id/scoreText2"
+        android:layout_alignStart="@+id/scoreText1"
+        android:layout_alignEnd="@+id/scoreText1" />
 </RelativeLayout>

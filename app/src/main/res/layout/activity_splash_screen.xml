@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/colorPrimaryDark1"
     tools:context="com.cs60333.nalvare1.lab1_nalvare1.MainActivity">
 
 
@@ -21,24 +21,22 @@
         android:ems="6"
         android:id="@+id/notreDameText1"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:textColor="@color/colorWhite"
         android:textSize="5mm"
 
-        />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="13dp" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/fightingirishicon"
+        app:srcCompat="@drawable/fightingirishicon_large"
         android:id="@+id/imageFightingIrish"
 
-        android:layout_marginTop="100dp"
-        android:layout_marginBottom="200dp"
         android:layout_marginRight="75dp"
         android:layout_marginLeft="75dp"
-        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -47,8 +45,17 @@
         android:textSize="3mm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/basketballText"
         android:layout_below="@+id/notreDameText1"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/basketballText" />
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:id="@+id/basketball_imageView"
+        android:layout_width="@dimen/bball_width"
+        android:layout_height="@dimen/bball_height"
+        android:layout_alignStart="@+id/imageFightingIrish"
+        android:layout_below="@+id/basketballText"
+        android:layout_marginTop="77dp"
+        app:srcCompat="@drawable/new_bball_large" />
 
 </RelativeLayout>

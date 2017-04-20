@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -20,34 +21,19 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {//or extends Activity??
     ArrayList<Team> teams;
     ListView scheduleListView;
+    DatabaseHelper dbHelper;
+    EditText book_name;
+    int num = 0;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        MyCsvFileReader reader = new MyCsvFileReader(getApplicationContext());
-        ArrayList<String[]> readerArrayList = reader.readCsvFile(R.raw.schedule); //returns an array list of strings??
-        Team wake = new Team(readerArrayList.get(0));
-        Team ohio = new Team(readerArrayList.get(1));
-        Team florida = new Team(readerArrayList.get(2));
-        Team boston = new Team(readerArrayList.get(3));
-        Team northC = new Team(readerArrayList.get(4));
-        Team georgia = new Team(readerArrayList.get(5));
-        Team northV = new Team(readerArrayList.get(6));
-        Team chicago = new Team(readerArrayList.get(7));
-
-        //create a list of arrays
-        teams = new ArrayList<>();
-        //final ArrayList<String[]> arr = new ArrayList<String[]>();
-        teams.add(wake);
-        teams.add(ohio);
-        teams.add(florida);
-        teams.add(boston);
-        teams.add(northC);
-        teams.add(georgia);
-        teams.add(northV);
-        teams.add(chicago);
+        //Lab 7: Database
+        dbHelper = new DatabaseHelper(getApplicationContext());
+        dbHelper.onUpgrade(dbHelper.getWritableDatabase(), 1, 2);
+        dbHelper.readData(getApplicationContext());
 
         //Lab 6:
         // getSupportActionBar().hide(); //do NOT use this!!(causes errors!)
@@ -56,15 +42,17 @@ public class MainActivity extends AppCompatActivity {//or extends Activity??
         my_tool_bar.setTitle("ND Athletics");
 
 
+        //Lab 7:
+        teams = dbHelper.returnData();
+
         ScheduleAdapter scheduleAdapter = new ScheduleAdapter(getApplicationContext(), teams);
         scheduleListView = (ListView) findViewById(R.id.scheduleListView);
         scheduleListView.setAdapter(scheduleAdapter);
-        //AdapterView.OnItemClickListener clickListener = (parent, view, position, id) -> {
 
         OnItemClickListener clickListener = new OnItemClickListener() {
             //  @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent myintent = new Intent(MainActivity.this, Detail.class);
+                Intent myintent = new Intent(MainActivity.this, DetailActivity.class);
                 myintent.putExtra("team", teams.get(position));
                 System.out.println("" + teams.get(position).getTeamName());
                 startActivity(myintent);
@@ -72,8 +60,8 @@ public class MainActivity extends AppCompatActivity {//or extends Activity??
             }
 
         };
-        //scheduleLisView or another listView???
         scheduleListView.setOnItemClickListener(clickListener);
+
 
     }
 
@@ -104,7 +92,7 @@ public class MainActivity extends AppCompatActivity {//or extends Activity??
         int res_id = item.getItemId();
 
         if (res_id == R.id.share) {
-// code for sharing the schedule
+        // code for sharing the schedule:
 
             Intent shareIntent = new Intent();
             shareIntent.setAction(android.content.Intent.ACTION_SEND);
@@ -114,7 +102,7 @@ public class MainActivity extends AppCompatActivity {//or extends Activity??
             startActivity(android.content.Intent.createChooser(shareIntent, "Share via"));
 
         } else if (res_id == R.id.sync) {
-        // Snackbar with Try Again action
+        // Snack bar with Try Again action:
 
             final CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorlayout);
             Snackbar snackbar = Snackbar.make(coordinatorLayout, "Sync is not yet implemented", Snackbar.LENGTH_LONG);

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/women"
+        android:icon="@drawable/ic_share"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="Women's Basketball"/>
+
+    <item android:id="@+id/men"
+        android:icon="@drawable/ic_sync"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:title="Men's Basketball"/>
+
+    <item android:id="@+id/oncampus"
+        android:icon="@drawable/settings"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="On Campus Event"/>
+
+    <item android:id="@+id/offcampus"
+        android:icon="@drawable/ic_settings"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="Off Campus Event"/>
+</menu>
